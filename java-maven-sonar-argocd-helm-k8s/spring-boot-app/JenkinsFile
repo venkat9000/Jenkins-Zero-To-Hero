@@ -1,7 +1,7 @@
 pipeline {
   agent {
     docker {
-      image 'abhishekf5/maven-abhishek-docker-agent:v1'
+      image 'venkat6564/vvenkatsmple:v4'
       args '--user root -v /var/run/docker.sock:/var/run/docker.sock' // mount Docker socket to access the host's Docker daemon
     }
   }
@@ -21,7 +21,7 @@ pipeline {
     }
     stage('Static Code Analysis') {
       environment {
-        SONAR_URL = "http://54.157.192.89:9000"
+        SONAR_URL = "http://65.0.132.29:9000"
       }
       steps {
         withCredentials([string(credentialsId: 'sonarqube', variable: 'sonarqube')]) {
@@ -31,7 +31,7 @@ pipeline {
     }
     stage('Build and Push Docker Image') {
       environment {
-        DOCKER_IMAGE = "venkat6564/vvenkatsmple:${BUILD_NUMBER}"
+        DOCKER_IMAGE = "venkat6564/vvenkatsmple:v4${BUILD_NUMBER}"
         // DOCKERFILE_LOCATION = "java-maven-sonar-argocd-helm-k8s/spring-boot-app/Dockerfile"
         REGISTRY_CREDENTIALS = credentials('docker-cred')
       }
